@@ -7,7 +7,7 @@ let g:c_family_filetype_list =
 
 
 let g:codequery_supported_filetype_list = g:c_family_filetype_list +
-    \ ['python', 'javascript', 'go', 'ruby', 'java', 'c', 'cpp']
+    \ ['python', 'javascript', 'go', 'ruby', 'java', 'c', 'cpp', 'erlang']
 
 
 let s:menu_subcommands = [ 'Unite' ]
@@ -38,16 +38,10 @@ function! s:save_cwd() abort
 endfunction
 
 
-function! s:restore_cwd()
-    execute 'lcd ' . g:codequery_cwd
-    let g:codequery_cwd = ''
-endfunction
-
 
 
 " =============================================================================
 " Entries
-
 
 function! codequery#run_codequery(args) abort
     call s:save_cwd()
@@ -66,7 +60,6 @@ function! codequery#run_codequery(args) abort
     let g:codequery_querytype = 1
     let g:codequery_db_path = ''
     if !s:set_db()
-        call s:restore_cwd()
         if g:codequery_trigger_build_db_when_db_not_found
             execute 'CodeQueryMakeDB ' . &filetype
         endif
@@ -86,7 +79,6 @@ function! codequery#run_codequery(args) abort
         let word = codequery#query#get_final_query_word(iword, cword)
         if empty(word)
             echom 'Invalid Args: ' . a:args
-            call s:restore_cwd()
             return
         endif
 
@@ -94,7 +86,6 @@ function! codequery#run_codequery(args) abort
     else
         echom 'Wrong Subcommand !'
     endif
-    call s:restore_cwd()
 endfunction
 
 
@@ -130,6 +121,8 @@ function! codequery#make_codequery_db(args) abort
             let shell_cmd = codequery#db#construct_go_db_build_cmd(db_path)
         elseif ft ==? 'java'
             let shell_cmd = codequery#db#construct_java_db_build_cmd(db_path)
+        elseif ft ==? 'erlang'
+            let shell_cmd = codequery#db#construct_erlang_db_build_cmd(db_path)
         elseif index(g:c_family_filetype_list, ft) != -1
             let shell_cmd = codequery#db#construct_c_db_build_cmd(db_path)
         else
@@ -156,7 +149,6 @@ function! codequery#make_codequery_db(args) abort
             redraw!
         endif
     endfor
-    call s:restore_cwd()
 endfunction
 
 
@@ -185,7 +177,6 @@ function! codequery#view_codequery_db(args) abort
 
         execute '!echo "\n(' . db_path . ') is update at: "  &&  stat -f "\%Sm" ' . db_path
     endfor
-    call s:restore_cwd()
 endfunction
 
 
@@ -214,7 +205,6 @@ function! codequery#move_codequery_db_to_git_hidden_dir(args) abort
             echom 'Git Dir Not Found or (' . db_name . ') Not Found'
         endif
     endfor
-    call s:restore_cwd()
 endfunction
 
 

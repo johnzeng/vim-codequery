@@ -112,11 +112,7 @@ endfunction
 " Ref: MarcWeber's vim-addon-qf-layout
 function! codequery#query#prettify_qf_layout_and_map_keys(results) abort
     if &filetype !=# 'qf'
-        if !empty(g:codequery_cwd)
-            execute 'lcd ' . g:codequery_cwd
-        endif
         copen
-        execute 'lcd ' . g:codequery_cwd
     endif
 
     " unlock qf to make changes
@@ -187,9 +183,6 @@ function! codequery#query#do_query(word) abort
 
     " Find Text
     if empty(grepformat)
-        if g:codequery_find_text_from_current_file_dir == 1
-            lcd %:p:h
-        endif
         silent execute grepprg
         call codequery#query#prettify_qf_layout_and_map_keys(getqflist())
         let g:codequery_last_query_word = a:word

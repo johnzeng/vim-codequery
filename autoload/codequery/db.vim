@@ -2,7 +2,6 @@
 " Entries
 
 
-" `lcd` brings side effect !!
 function! codequery#db#find_db_path(filetype) abort
     if index(g:c_family_filetype_list, a:filetype) != -1
         let db_name = 'c_family.db'
@@ -13,22 +12,18 @@ function! codequery#db#find_db_path(filetype) abort
     let lookup_path = findfile(expand('%:p:h') . '/' . db_name, '.')
 
     if !empty(lookup_path)
-        lcd %:p:h
         return lookup_path
     endif
 
-    lcd %:p:h
     let git_root_dir = systemlist('git rev-parse --show-toplevel')[0]
     if !v:shell_error
         let lookup_path = findfile(git_root_dir . '/' . db_name, '.')
         if !empty(lookup_path)
-            execute 'lcd ' . git_root_dir
             return lookup_path
         else
             let lookup_path = findfile(git_root_dir . '/.git/codequery/' .
                                         \ db_name, '.')
             if !empty(lookup_path)
-                execute 'lcd ' . git_root_dir
                 return lookup_path
             endif
         endif
@@ -76,7 +71,6 @@ function! codequery#db#construct_javascript_db_build_cmd(db_path) abort
 
     return exists('g:codequery_build_javascript_db_cmd') ? g:codequery_build_javascript_db_cmd : shell_cmd
 endfunction
-
 
 function! codequery#db#construct_ruby_db_build_cmd(db_path) abort
     let starscope_cmd = 'starscope --force-update -e ctags -e cscope **/*.rb'
@@ -142,7 +136,7 @@ function! codequery#db#construct_c_db_build_cmd(db_path) abort
                  \ 'find . -iname "*.hxx" >> c_cscope.files && ' .
                  \ 'find . -iname "*.hh" >> c_cscope.files'
     let cscope_cmd = 'cscope -cbk -i c_cscope.files -f c_cscope.out'
-    let ctags_cmd = 'ctags --fields=+i -n -R -f "c_tags" -L c_cscope.files'
+    let ctags_cmd = 'ctags --fields=+i -N -R -f "c_tags" -L c_cscope.files'
     let cqmakedb_cmd = 'cqmakedb -s "' . a:db_path . '" -c c_cscope.out' .
                      \ ' -t c_tags -p'
     let shell_cmd = find_cmd . ' && ' .
