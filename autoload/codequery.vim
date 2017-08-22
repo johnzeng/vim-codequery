@@ -10,9 +10,6 @@ let g:codequery_supported_filetype_list = g:c_family_filetype_list +
     \ ['python', 'javascript', 'go', 'ruby', 'java', 'c', 'cpp', 'erlang']
 
 
-let s:menu_subcommands = [ 'Unite' ]
-
-
 function! s:check_filetype(filetype) abort
     if index(g:codequery_supported_filetype_list, a:filetype) == -1
         return 0
@@ -207,27 +204,6 @@ function! codequery#move_codequery_db_to_git_hidden_dir(args) abort
     endfor
 endfunction
 
-
-function! codequery#show_menu(args) abort
-    let args = split(a:args, ' ')
-    let args_num = len(args)
-
-    if args_num > 0 && index(s:menu_subcommands, args[0]) != -1
-        if args[0] ==# 'Unite'
-            if args_num > 1 && args[1] ==# 'Magic'
-                let magic_menu = 1
-            else
-                let magic_menu = 0
-            endif
-            call codequery#menu#use_unite_menu(magic_menu)
-            return
-        endif
-    endif
-
-    echom 'Wrong Subcommands! Try: ' . join(s:menu_subcommands, ', ')
-endfunction
-
-
 function! codequery#run_codequery_again_with_different_subcmd(args) abort
     let args = split(a:args, ' ')
     let args_num = len(args)
@@ -240,7 +216,6 @@ function! codequery#run_codequery_again_with_different_subcmd(args) abort
         echom 'Wrong Subcommands!'
     endif
 endfunction
-
 
 " modify from someone's .vimrc
 function! codequery#filter_qf_results(args) abort

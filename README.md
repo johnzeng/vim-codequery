@@ -5,10 +5,7 @@
 > Choose what you want to know! 😼
      
 ```vim
-" Open menu
-:CodeQueryMenu Unite Full
-
-" Or query directly
+" query directly
 :CodeQuery Definition get_user_id
 ```
   <br>  
@@ -203,7 +200,6 @@ Plug 'mileszs/ack.vim'
 | M | `:CodeQueryAgain Member` | |
 | P | `:CodeQueryAgain Parent` | |
 | D | `:CodeQueryAgain Child` | |
-| m | `:CodeQueryMenu Unite Magic` | |
 | q | `:cclose` | |
 | \ | `:CodeQueryFilter` | |
 | p | `<CR><C-W>p` | Preview |
@@ -220,46 +216,9 @@ Plug 'mileszs/ack.vim'
   
 " This command can also be used to **patch** standard Quickfix.
 ```
-
-#### 4. Open Menu
-
-Currently, vim-codequery only provides [Unite](https://github.com/Shougo/unite.vim) menu because I love it ⭐.  There are two types of menu:
-
-* **Full Unite menu**
-
-```vim
-:CodeQueryMenu Unite Full  
-  
-" The string between :: and :: is the word under cursor
-" [F] means this action is for 'function variable only'
-" [C] is for 'class variable only'  
-```
-<img src="https://db.tt/j9XrjR4v" align="center" width="400">   
-    
-* **Magic Unite menu**
-
-```vim
-:CodeQueryMenu Unite Magic  
-  
-" This menu changes dynamically:
-" 1. If the word under your cursor begins with a capital letter (possible be class): show [C] actions
-" 2. vice versa (possible be function): show [F] actions
-" 3. Show reasonable actions within Quickfix
-```
-<img src="https://db.tt/g6ZXMfaY" align="center" width="300">   
-  
 <br>
   
 ## Tips
-#### Open Menu  
-```vim
-nnoremap <space>c :CodeQueryMenu Unite Full<CR>
-nnoremap <space>; :CodeQueryMenu Unite Magic<CR>
-  
-" Or enable typing (to search menu items) by default
-nnoremap <space>\ :CodeQueryMenu Unite Magic<CR>A
-```
-  
 #### Query  
 ```vim
 nnoremap <space><CR> :CodeQuery Symbol<CR>
@@ -322,8 +281,7 @@ let g:codequery_build_go_db_cmd = '...'
 let g:codequery_build_java_db_cmd = '...'  
 let g:codequery_build_c_db_cmd = '...'  
 ```
-  
-  
+
 #### Others
 ```vim
 " You can disable key binding within quickfix
@@ -384,7 +342,6 @@ Thank all for working on these great projects!
 * [CodeQuery](https://github.com/ruben2020/codequery)
 * [Starscope](https://github.com/eapache/starscope)
 * [PyCscope](https://github.com/portante/pycscope)
-* [Unite.vim](https://github.com/Shougo/unite.vim)
 * [dispatch.vim](https://github.com/tpope/vim-dispatch)
 * [ack.vim](https://github.com/mileszs/ack.vim)
 * [vim-addon-qf-layout](https://github.com/MarcWeber/vim-addon-qf-layout)
