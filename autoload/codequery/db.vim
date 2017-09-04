@@ -31,8 +31,8 @@ function! codequery#db#find_db_path(filetype) abort
 endfunction
 
 
-function! codequery#db#make_db_callback(job, status) dict
-    echom 'Done!  (' . self.db_path . ')'
+function! codequery#db#make_db_callback(job, data, status) dict
+    echom 'Build codequery db Done!'
 endfunction
 
 
