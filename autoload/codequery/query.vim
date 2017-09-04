@@ -170,7 +170,6 @@ function! codequery#query#prettify_qf_layout_and_map_keys(results) abort
     setlocal nomodified
 endfunction
 
-
 function! codequery#query#do_query(word) abort
     if empty(a:word)
         echom 'Invalid Search Term: ' . a:word

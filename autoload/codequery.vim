@@ -85,7 +85,6 @@ function! codequery#run_codequery(args) abort
     endif
 endfunction
 
-
 function! codequery#make_codequery_db(args) abort
     call s:save_cwd()
     let args = split(a:args, ' ')
