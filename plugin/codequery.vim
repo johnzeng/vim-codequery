@@ -56,7 +56,6 @@ command! -nargs=* CodeQueryMakeDB call codequery#make_codequery_db(<q-args>)
 command! -nargs=* CodeQueryViewDB call codequery#view_codequery_db(<q-args>)
 command! -nargs=* CodeQueryMoveDBToGitDir
             \ call codequery#move_codequery_db_to_git_hidden_dir(<q-args>)
-command! -nargs=* CodeQueryMenu call codequery#show_menu(<q-args>)
 command! -nargs=0 CodeQueryShowQF call
             \ codequery#query#prettify_qf_layout_and_map_keys(getqflist())
 
