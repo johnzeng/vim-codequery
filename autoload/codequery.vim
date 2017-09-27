@@ -126,7 +126,13 @@ function! codequery#make_codequery_db(args) abort
             continue
         endif
 
-        if v:version >= 800
+        if has('nvim')
+            echom 'Making DB ...'
+            let mydict = {'db_path': db_path,
+                         \'callback': function("codequery#db#make_db_callback")}
+            let callbacks = {'on_exit': mydict.callback}
+            let s:build_job = jobstart(['/bin/sh', '-c', shell_cmd], callbacks)
+        elseif v:version >= 800
             echom 'Making DB ...'
             let mydict = {'db_path': db_path,
                          \'callback': function("codequery#db#make_db_callback")}
@@ -136,12 +142,6 @@ function! codequery#make_codequery_db(args) abort
             let timer = timer_start(500,
                                    \{-> execute("call job_status(s:build_job)","")},
                                    \{'repeat': 60})
-        elseif has('nvim')
-            echom 'Making DB ...'
-            let mydict = {'db_path': db_path,
-                         \'callback': function("codequery#db#make_db_callback")}
-            let callbacks = {'on_exit': mydict.callback}
-            let s:build_job = jobstart(['/bin/sh', '-c', shell_cmd], callbacks)
         elseif exists(':Start')
             silent execute 'Start! -title=Make_CodeQuery_DB -wait=error ' . shell_cmd
             redraw!

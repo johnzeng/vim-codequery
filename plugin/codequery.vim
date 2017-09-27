@@ -31,8 +31,6 @@ if !exists('g:codequery_enable_not_so_magic_menu')
     let g:codequery_enable_not_so_magic_menu = 0
 endif
 
-
-
 " No need to init
 "let g:codequery_build_python_db_cmd = ''
 "let g:codequery_build_javascript_db_cmd = ''
