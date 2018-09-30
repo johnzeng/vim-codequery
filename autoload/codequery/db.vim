@@ -9,7 +9,7 @@ function! codequery#db#find_db_path(filetype) abort
         let db_name = a:filetype . '.db'
     endif
 
-    let lookup_path = findfile(expand('%:p:h') . '/' . db_name, '.')
+    let lookup_path = findfile(getcwd() .'/'. db_name, '.')
 
     if !empty(lookup_path)
         return lookup_path
