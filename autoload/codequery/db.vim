@@ -136,7 +136,7 @@ function! codequery#db#construct_c_db_build_cmd(db_path) abort
                  \ 'find . -iname "*.hxx" >> c_cscope.files && ' .
                  \ 'find . -iname "*.hh" >> c_cscope.files'
     let cscope_cmd = 'cscope -cbk -i c_cscope.files -f c_cscope.out'
-    let ctags_cmd = 'ctags --fields=+i -N -R -f "c_tags" -L c_cscope.files'
+    let ctags_cmd = 'ctags --fields=+afmikKlnsStz -N -R --languages=+c++,c -f "c_tags" -L c_cscope.files'
     let cqmakedb_cmd = 'cqmakedb -s "' . a:db_path . '" -c c_cscope.out' .
                      \ ' -t c_tags -p'
     let shell_cmd = find_cmd . ' && ' .
